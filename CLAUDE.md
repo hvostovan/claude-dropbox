@@ -1,9 +1,10 @@
 # claude-dropbox — agent notes
 
 Purpose: one-way relay VPS → user's personal laptop. User's corporate VPN blocks direct access
-to the VPS/Google Drive/OneDrive from the work environment, but GitHub is allowlisted. A
-background script on the Windows laptop polls this repo (`git pull` every ~5s) to pull files
-down. There is no pull-back path — treat this repo as VPS-to-laptop only.
+to the VPS/Google Drive/OneDrive from the work environment, but GitHub is allowlisted. User
+reads files straight from github.com in a browser (no local clone/sync script on the Windows
+side — that was considered and dropped 2026-08-17, browser access was simpler). Treat this repo
+as VPS-to-laptop only, no pull-back path.
 
 ## Workflow
 
@@ -20,7 +21,5 @@ down. There is no pull-back path — treat this repo as VPS-to-laptop only.
 
 - Never commit secrets/credentials/keys here — this repo's whole purpose is to land content on
   a machine that periodically sits inside a corporate network perimeter.
-- The Windows-side deploy key is read-only by design (added separately, see repo's GitHub
-  deploy keys settings) — a compromise there can't push back to this repo.
 - Don't reuse `/root/.ssh/github_progects_deploy_key` (the `server-infra` repo's key) here —
   keep deploy keys scoped one-per-repo, same convention as [[project-server-infra-repo]].
