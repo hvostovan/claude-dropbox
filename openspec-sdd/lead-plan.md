@@ -3,9 +3,12 @@
 > Отдельно от `team-training-plan.md` (тот — про роли и общий процесс). Это — конкретно твой
 > операционный план: что настраиваешь, что запускаешь, какими командами. Содержимое
 > контекст-файлов ниже — реальные шаблоны из материала Сбербанка, подрезанные под наш
-> минимальный набор (`00 + 03 + 04`, без `01/02/05/06/07/ADR/examples` — решили их не создавать,
-> роли сформируют свою часть в ходе упражнения). Плейсхолдеры в `[квадратных скобках]` — ждут
-> задачу, впишу конкретику как только пришлёшь.
+> минимальный набор. Раз используем только `start-here` + `architecture` +
+> `engineering-standards` (без `product-context/domain-glossary/security-and-compliance/
+> testing-and-quality/anti-patterns` — решили их не создавать, роли сформируют свою часть в
+> ходе упражнения), пронумеровали подряд без дырок: `00-start-here.md`, `01-architecture.md`,
+> `02-engineering-standards.md`. Плейсхолдеры в `[квадратных скобках]` — ждут задачу, впишу
+> конкретику как только пришлёшь.
 
 ## Роль в двух словах
 
@@ -57,8 +60,8 @@ updated: [ГГГГ-ММ-ДД]
 Работаешь с продуктом: [название].
 
 ## Перед началом любой задачи
-1. Прочитай 03-architecture.md.
-2. Прочитай 04-engineering-standards.md.
+1. Прочитай 01-architecture.md.
+2. Прочитай 02-engineering-standards.md.
 3. Не делай изменений вне scope задачи.
 4. Не хватает контекста — сформулируй, какого, и не угадывай.
 
@@ -67,7 +70,7 @@ updated: [ГГГГ-ММ-ДД]
 - [запрет 2]
 ```
 
-### `openspec/context/03-architecture.md`
+### `openspec/context/01-architecture.md`
 ```markdown
 ---
 owner: Архитектор / Тимлид
@@ -91,7 +94,7 @@ updated: [ГГГГ-ММ-ДД]
 [upstream/downstream системы, API]
 ```
 
-### `openspec/context/04-engineering-standards.md`
+### `openspec/context/02-engineering-standards.md`
 ```markdown
 ---
 owner: Тимлид
@@ -126,7 +129,7 @@ context:
 Если описание в _raw расходится с актуальным кодом — верь коду, спорное выноси человеку.
 
 Перед созданием ЛЮБОГО артефакта обязательно прочитай файлы из openspec/context/:
-- 00-start-here.md, 03-architecture.md, 04-engineering-standards.md
+- 00-start-here.md, 01-architecture.md, 02-engineering-standards.md
 Не хватает контекста — НЕ угадывай, сформулируй, какого, и не молчи.
 
 rules:
@@ -136,7 +139,7 @@ rules:
   specs:
     - Если описание в _raw расходится с кодом — верь коду.
   design:
-    - Опирайся на инварианты из 03-architecture.md.
+    - Опирайся на инварианты из 01-architecture.md.
   tasks:
     - Не делай refactor вне задачи.
 ```
