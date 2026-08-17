@@ -17,9 +17,8 @@ git clone <url>
 ```
 git checkout python   # или javascript / java
 ```
-4. Ставишь зависимости под стек (`npm install` / `pip install -r requirements.txt` / `mvn
-   install` — что актуально, это не коммитится в git, отдельный шаг).
-5. Дальше — по `role-playbooks.md`, начиная с Этапа 1.
+4. Дальше — по `role-playbooks.md`, начиная с Этапа 1. Зависимости ставит сам GigaCode по ходу
+   реализации, отдельно руками ничего не нужно.
 
 ## Подготовка репозитория (один раз, до обучения)
 
