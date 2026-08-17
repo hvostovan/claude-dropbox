@@ -5,7 +5,7 @@
 schema: spec-driven
 
 context:
-  Продукт: [заполняет Product Owner на Этапе 1 — см. role-playbooks.md]
+  Продукт: [заполняет Product Owner на Этапе 1 — см. guide/role-playbooks.md]
 
 Если описание в _raw расходится с актуальным кодом — верь коду, спорное выноси человеку.
 
