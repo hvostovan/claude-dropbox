@@ -1,85 +1,37 @@
 <title>Sprint Planner</title>
 <style>
+  /* Committed to Private Banking's own dark/terracotta identity — not a
+     light/dark toggle, this is the brand, so no prefers-color-scheme swap. */
   :root {
-    color-scheme: light;
-    --paper: #eef1f4;
-    --card: #ffffff;
-    --card-soft: #f7f8fa;
-    --ink: #1c2430;
-    --ink-soft: #5b6472;
-    --ink-faint: #8994a3;
-    --line: #dce1e7;
-    --line-soft: #e8ebef;
-    --accent: #1f7a6c;
-    --accent-ink: #e9f5f2;
-    --accent-contrast: #ffffff;
-    --danger: #c1473a;
-    --danger-ink: #fbeceb;
-    --shadow: 0 1px 2px rgba(28, 36, 48, 0.06), 0 8px 24px -12px rgba(28, 36, 48, 0.18);
-    --shadow-lift: 0 2px 4px rgba(28, 36, 48, 0.08), 0 16px 32px -16px rgba(28, 36, 48, 0.28);
+    color-scheme: dark;
+    --paper: #141210;
+    --surface: #1d1a16;
+    --surface-soft: #241f19;
+    --ink: #f3efe7;
+    --ink-soft: #b6ac9c;
+    --ink-faint: #7c7364;
+    --line: #3a3226;
+    --line-soft: #2b271f;
 
-    --epic-1: #d98e2b; --epic-1-ink: #fbf1e2;
-    --epic-2: #7b6fd9; --epic-2-ink: #f0eefb;
-    --epic-3: #3e7cb1; --epic-3-ink: #eaf3fa;
-    --epic-4: #c15b8c; --epic-4-ink: #faeaf1;
-    --epic-5: #5b8c5a; --epic-5-ink: #edf5ec;
-    --epic-6: #b1543e; --epic-6-ink: #faece8;
+    --accent: #cb8c5e;
+    --accent-contrast: #171310;
+    --accent-ink: #2a2018;
+    --chip-ink: #171310;
+
+    --danger: #c1573f;
+    --danger-ink: #2c1b16;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px -12px rgba(0, 0, 0, 0.55);
+    --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 32px -16px rgba(0, 0, 0, 0.65);
+
+    --epic-1: #cb8c5e; --epic-1-ink: #2a2018; /* terracotta */
+    --epic-2: #b99a5b; --epic-2-ink: #29241a; /* ochre */
+    --epic-3: #8291a0; --epic-3-ink: #1e2327; /* slate */
+    --epic-4: #a66e66; --epic-4-ink: #271a17; /* dusty wine */
+    --epic-5: #8b9678; --epic-5-ink: #22241b; /* sage */
 
     --font-ui: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
     --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-      --paper: #14181d;
-      --card: #1c2229;
-      --card-soft: #20262e;
-      --ink: #e7eaee;
-      --ink-soft: #9aa4b0;
-      --ink-faint: #6b7480;
-      --line: #2b323b;
-      --line-soft: #262d35;
-      --accent: #3fb3a0;
-      --accent-ink: #17332f;
-      --accent-contrast: #0c1512;
-      --danger: #e2685a;
-      --danger-ink: #331e1c;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
-      --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 32px -16px rgba(0, 0, 0, 0.6);
-
-      --epic-1: #e3a24a; --epic-1-ink: #2e2411;
-      --epic-2: #9a8fe8; --epic-2-ink: #221f38;
-      --epic-3: #5b9bd1; --epic-3-ink: #16232f;
-      --epic-4: #d382ac; --epic-4-ink: #2c1c25;
-      --epic-5: #7cab7a; --epic-5-ink: #1a2419;
-      --epic-6: #c97258; --epic-6-ink: #2b1a15;
-    }
-  }
-  :root[data-theme="dark"] {
-    color-scheme: dark;
-    --paper: #14181d;
-    --card: #1c2229;
-    --card-soft: #20262e;
-    --ink: #e7eaee;
-    --ink-soft: #9aa4b0;
-    --ink-faint: #6b7480;
-    --line: #2b323b;
-    --line-soft: #262d35;
-    --accent: #3fb3a0;
-    --accent-ink: #17332f;
-    --accent-contrast: #0c1512;
-    --danger: #e2685a;
-    --danger-ink: #331e1c;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
-    --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 32px -16px rgba(0, 0, 0, 0.6);
-
-    --epic-1: #e3a24a; --epic-1-ink: #2e2411;
-    --epic-2: #9a8fe8; --epic-2-ink: #221f38;
-    --epic-3: #5b9bd1; --epic-3-ink: #16232f;
-    --epic-4: #d382ac; --epic-4-ink: #2c1c25;
-    --epic-5: #7cab7a; --epic-5-ink: #1a2419;
-    --epic-6: #c97258; --epic-6-ink: #2b1a15;
   }
 
   * { box-sizing: border-box; }
@@ -111,27 +63,54 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     padding: 4px 2px;
   }
-  .brand { display: flex; align-items: baseline; gap: 9px; }
-  .brand-mark { font-size: 1.05rem; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .squirrel { width: 32px; height: 32px; color: var(--accent); flex: none; }
+  .squirrel .tail { transform-origin: 30px 22px; animation: tail-sway 3.6s ease-in-out infinite; }
+  @keyframes tail-sway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-7deg); }
+  }
+  .brand-text { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
   .brand-name {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     font-weight: 650;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
   .brand-sub {
     color: var(--ink-faint);
     font-size: 0.82rem;
   }
+  .topbar-actions { display: flex; align-items: center; gap: 8px; }
+  .icon-label-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 38px;
+    padding: 0 13px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-size: 0.83rem;
+    font-weight: 600;
+    box-shadow: var(--shadow);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .icon-label-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .icon-label-btn svg { width: 15px; height: 15px; }
   .gear-btn {
     display: grid;
     place-items: center;
     width: 38px;
     height: 38px;
-    border-radius: 10px;
+    border-radius: 9px;
     border: 1px solid var(--line);
-    background: var(--card);
+    background: var(--surface);
     color: var(--ink-soft);
     cursor: pointer;
     box-shadow: var(--shadow);
@@ -161,9 +140,9 @@
     align-items: center;
     gap: 7px;
     padding: 8px 14px;
-    border-radius: 9px;
+    border-radius: 8px;
     border: 1px solid var(--line);
-    background: var(--card);
+    background: var(--surface);
     color: var(--ink-soft);
     font-weight: 550;
     font-size: 0.88rem;
@@ -178,11 +157,11 @@
   .epic-chip[aria-pressed="true"] {
     background: var(--dot-color, var(--accent));
     border-color: transparent;
-    color: #fff;
+    color: var(--chip-ink);
     box-shadow: var(--shadow-lift);
     transform: translateY(-1px);
   }
-  .epic-chip[aria-pressed="true"] .dot { background: rgba(255,255,255,0.85); }
+  .epic-chip[aria-pressed="true"] .dot { background: var(--chip-ink); opacity: 0.55; }
 
   /* ---------- Layout: two frames ---------- */
   .board-layout {
@@ -196,9 +175,9 @@
   }
 
   .capture-card {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 10px;
     padding: 18px;
     box-shadow: var(--shadow);
     position: sticky;
@@ -209,7 +188,7 @@
   }
   .capture-card h2 {
     margin: 0;
-    font-size: 1.02rem;
+    font-size: 1.0rem;
     font-weight: 650;
     letter-spacing: -0.01em;
   }
@@ -219,10 +198,10 @@
     gap: 7px;
     align-self: flex-start;
     padding: 5px 10px 5px 8px;
-    border-radius: 7px;
+    border-radius: 6px;
     font-size: 0.8rem;
     font-weight: 600;
-    background: var(--tag-bg, var(--card-soft));
+    background: var(--tag-bg, var(--surface-soft));
     color: var(--tag-fg, var(--ink-soft));
   }
   .capture-epic .dot { width: 8px; height: 8px; border-radius: 2px; background: currentColor; }
@@ -231,9 +210,9 @@
   .field { display: flex; flex-direction: column; gap: 6px; }
   .field-label { font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); }
   textarea, select, input[type="text"] {
-    background: var(--card-soft);
+    background: var(--surface-soft);
     border: 1px solid var(--line);
-    border-radius: 9px;
+    border-radius: 7px;
     padding: 9px 11px;
     color: var(--ink);
     resize: vertical;
@@ -242,7 +221,7 @@
   textarea::placeholder, input::placeholder { color: var(--ink-faint); }
 
   .btn {
-    border-radius: 9px;
+    border-radius: 7px;
     padding: 10px 16px;
     font-weight: 600;
     font-size: 0.9rem;
@@ -253,75 +232,118 @@
   .btn:active { transform: translateY(1px); }
   .btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .btn-primary { background: var(--accent); color: var(--accent-contrast); }
-  .btn-primary:hover:not(:disabled) { filter: brightness(1.06); }
-  .btn-ghost { background: var(--card-soft); color: var(--ink); border-color: var(--line); }
+  .btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+  .btn-ghost { background: var(--surface-soft); color: var(--ink); border-color: var(--line); }
   .btn-ghost:hover { border-color: var(--ink-faint); }
 
-  /* ---------- Board (right frame) ---------- */
-  .board { display: flex; flex-direction: column; gap: 20px; }
-  .board:empty::after {
-    content: "Пока нет задач — заполните форму слева.";
-    color: var(--ink-faint);
-    font-size: 0.9rem;
+  /* ---------- Board (right frame) — one continuous, copy-friendly list ---------- */
+  .board-sheet {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
   }
-  .epic-group { display: flex; flex-direction: column; gap: 9px; }
-  .epic-group-head {
+  .board-toolbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .board-toolbar h2 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 650;
+  }
+  .board-toolbar .total {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+    font-weight: 400;
+    margin-left: 6px;
+  }
+  .copy-btn {
+    flex: none;
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding-left: 2px;
+    gap: 6px;
+    padding: 6px 11px;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    background: var(--surface-soft);
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
   }
-  .epic-group-head .bar { width: 4px; height: 16px; border-radius: 2px; background: var(--bar-color, var(--ink-faint)); }
+  .copy-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .copy-btn svg { width: 13px; height: 13px; }
+
+  .board-list { padding: 4px 16px 14px; }
+  .board-list:empty::after {
+    content: "Пока нет задач — заполните форму слева.";
+    display: block;
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+    padding: 16px 0 8px;
+  }
+  .epic-group-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 14px 0 6px;
+  }
+  .epic-group-head .dot { width: 7px; height: 7px; border-radius: 2px; background: var(--dot-color, var(--ink-faint)); align-self: center; }
   .epic-group-head h3 {
     margin: 0;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+    color: var(--dot-color, var(--ink-soft));
   }
   .epic-group-head .count {
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     color: var(--ink-faint);
   }
-  .task-list { display: flex; flex-direction: column; gap: 7px; }
   .task-row {
     display: flex;
     align-items: flex-start;
-    gap: 11px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 11px;
-    padding: 11px 12px;
-    box-shadow: var(--shadow);
+    gap: 10px;
+    padding: 8px 2px;
+    border-bottom: 1px solid var(--line-soft);
   }
+  .task-row:last-child { border-bottom: none; }
   .avatar {
-    flex: none;
-    width: 27px; height: 27px;
-    border-radius: 8px;
-    display: grid;
-    place-items: center;
-    font-size: 0.72rem;
-    font-weight: 700;
-    background: var(--card-soft);
-    color: var(--ink-soft);
-  }
-  .task-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-  .task-text { font-size: 0.92rem; word-wrap: break-word; }
-  .task-assignee { font-size: 0.78rem; color: var(--ink-faint); }
-  .task-remove {
     flex: none;
     width: 24px; height: 24px;
     border-radius: 7px;
+    display: grid;
+    place-items: center;
+    font-size: 0.68rem;
+    font-weight: 700;
+    background: var(--surface-soft);
+    color: var(--ink-soft);
+    user-select: none;
+  }
+  .task-line { flex: 1; min-width: 0; font-size: 0.92rem; word-wrap: break-word; padding-top: 2px; }
+  .task-assignee { color: var(--ink-faint); }
+  .task-remove {
+    flex: none;
+    width: 22px; height: 22px;
+    border-radius: 6px;
     border: none;
     background: transparent;
     color: var(--ink-faint);
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     line-height: 1;
     opacity: 0;
+    user-select: none;
     transition: opacity 0.12s ease, background 0.12s ease, color 0.12s ease;
   }
   .task-row:hover .task-remove,
@@ -332,7 +354,7 @@
   /* ---------- Settings drawer ---------- */
   .scrim {
     position: fixed; inset: 0;
-    background: rgba(10, 14, 20, 0.4);
+    background: rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(1px);
     z-index: 20;
   }
@@ -349,15 +371,14 @@
     padding: 18px 18px 24px;
     gap: 22px;
     overflow-y: auto;
-    transform: translateX(0);
   }
   .drawer-head { display: flex; align-items: center; justify-content: space-between; }
-  .drawer-head h2 { margin: 0; font-size: 1.05rem; font-weight: 650; }
+  .drawer-head h2 { margin: 0; font-size: 1.0rem; font-weight: 650; }
   .icon-btn {
     width: 32px; height: 32px;
-    border-radius: 8px;
+    border-radius: 7px;
     border: 1px solid var(--line);
-    background: var(--card);
+    background: var(--surface);
     color: var(--ink-soft);
     cursor: pointer;
   }
@@ -366,10 +387,10 @@
   .drawer-section { display: flex; flex-direction: column; gap: 10px; }
   .drawer-section h3 {
     margin: 0;
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     color: var(--ink-soft);
   }
   .manage-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
@@ -377,9 +398,9 @@
     display: flex;
     align-items: center;
     gap: 9px;
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 9px;
+    border-radius: 8px;
     padding: 7px 8px 7px 10px;
   }
   .manage-row .dot { width: 9px; height: 9px; border-radius: 3px; flex: none; background: var(--dot-color, var(--ink-faint)); }
@@ -415,23 +436,39 @@
   [hidden] { display: none !important; }
 
   @media (prefers-reduced-motion: reduce) {
-    * { transition-duration: 0.001ms !important; }
+    * { transition-duration: 0.001ms !important; animation: none !important; }
   }
 </style>
 
 <div class="app">
   <header class="topbar">
     <div class="brand">
-      <span class="brand-mark" aria-hidden="true">📌</span>
-      <span class="brand-name">Sprint Planner</span>
-      <span class="brand-sub">— общий список задач команды</span>
-    </div>
-    <button class="gear-btn" id="settingsBtn" aria-haspopup="dialog" aria-controls="settingsDrawer" title="Настройки: эпики и сотрудники">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.65 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.65a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.35 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"/>
+      <svg class="squirrel" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <ellipse cx="21" cy="30.5" rx="8.5" ry="7.5"/>
+        <circle cx="14.5" cy="20" r="6"/>
+        <path d="M11.5 15.2c-.6-1.8-.3-3 .6-3.6.7 1 .9 2.2.6 3.4"/>
+        <circle cx="12.6" cy="19.3" r="0.9" fill="currentColor" stroke="none"/>
+        <g class="tail">
+          <path d="M27 32c9-1 13.5-11 6.5-18 5 5 4.5 12-2 14"/>
+        </g>
       </svg>
-    </button>
+      <div class="brand-text">
+        <span class="brand-name">Sprint Planner</span>
+        <span class="brand-sub">— общий список задач команды</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-label-btn" id="exportBtn" title="Скачать все данные файлом .json">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Выгрузить JSON
+      </button>
+      <button class="gear-btn" id="settingsBtn" aria-haspopup="dialog" aria-controls="settingsDrawer" title="Настройки: эпики и сотрудники">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.65 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.65a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.35 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"/>
+        </svg>
+      </button>
+    </div>
   </header>
 
   <nav class="epic-rail" id="epicRail" aria-label="Выбор эпика"></nav>
@@ -451,7 +488,16 @@
       <button class="btn btn-primary" id="addTaskBtn">Добавить задачу</button>
     </section>
 
-    <section class="board" id="board" aria-label="Список задач по эпикам"></section>
+    <section class="board-sheet" aria-label="Список задач по эпикам">
+      <div class="board-toolbar">
+        <h2>Список задач<span class="total" id="taskTotal"></span></h2>
+        <button class="copy-btn" id="copyListBtn" title="Скопировать список задач текстом">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+          <span id="copyBtnLabel">Скопировать</span>
+        </button>
+      </div>
+      <div class="board-list" id="board"></div>
+    </section>
   </main>
 </div>
 
@@ -482,7 +528,7 @@
 </aside>
 
 <script>
-  const EPIC_COLORS = ['epic-1', 'epic-2', 'epic-3', 'epic-4', 'epic-5', 'epic-6'];
+  const EPIC_COLORS = ['epic-1', 'epic-2', 'epic-3', 'epic-4', 'epic-5'];
   let uidSeed = 0;
   const uid = () => 'id' + (++uidSeed);
 
@@ -516,6 +562,7 @@
   const taskAssignee = $('#taskAssignee');
   const addTaskBtn = $('#addTaskBtn');
   const board = $('#board');
+  const taskTotal = $('#taskTotal');
   const epicManageList = $('#epicManageList');
   const peopleManageList = $('#peopleManageList');
 
@@ -583,53 +630,38 @@
     });
   }
 
+  // Board renders as ONE continuous list (single sheet, hairline dividers,
+  // no per-epic cards) so a person can select top-to-bottom and copy it out
+  // as plain text — same as the "Скопировать" button below builds.
   function renderBoard() {
     board.innerHTML = '';
-    state.epics.forEach(epic => {
-      const tasks = state.tasks.filter(t => t.epicId === epic.id);
-      if (tasks.length === 0) return;
-      const group = document.createElement('div');
-      group.className = 'epic-group';
-      group.innerHTML = `
-        <div class="epic-group-head">
-          <span class="bar" style="--bar-color: var(--${epic.color})"></span>
-          <h3>${escapeHtml(epic.name)}</h3>
-          <span class="count">${tasks.length}</span>
-        </div>
-        <div class="task-list"></div>
-      `;
-      const list = group.querySelector('.task-list');
-      tasks.forEach(t => list.appendChild(renderTaskRow(t)));
-      board.appendChild(group);
-    });
+    let total = 0;
 
-    const unassigned = state.tasks.filter(t => !epicOf(t.epicId));
-    if (unassigned.length) {
-      const group = document.createElement('div');
-      group.className = 'epic-group';
-      group.innerHTML = `
-        <div class="epic-group-head">
-          <span class="bar"></span>
-          <h3>Без эпика</h3>
-          <span class="count">${unassigned.length}</span>
-        </div>
-        <div class="task-list"></div>
-      `;
-      const list = group.querySelector('.task-list');
-      unassigned.forEach(t => list.appendChild(renderTaskRow(t)));
-      board.appendChild(group);
+    function appendGroup(title, color, tasks) {
+      if (tasks.length === 0) return;
+      total += tasks.length;
+      const head = document.createElement('div');
+      head.className = 'epic-group-head';
+      if (color) head.style.setProperty('--dot-color', `var(--${color})`);
+      head.innerHTML = `<span class="dot"></span><h3>${escapeHtml(title)}</h3><span class="count">${tasks.length}</span>`;
+      board.appendChild(head);
+      tasks.forEach(t => board.appendChild(renderTaskRow(t)));
     }
+
+    state.epics.forEach(epic => {
+      appendGroup(epic.name, epic.color, state.tasks.filter(t => t.epicId === epic.id));
+    });
+    appendGroup('Без эпика', null, state.tasks.filter(t => !epicOf(t.epicId)));
+
+    taskTotal.textContent = total ? ` (${total})` : '';
   }
 
   function renderTaskRow(t) {
     const row = document.createElement('div');
     row.className = 'task-row';
     row.innerHTML = `
-      <span class="avatar">${escapeHtml(initials(personName(t.assigneeId)))}</span>
-      <span class="task-body">
-        <span class="task-text">${escapeHtml(t.text)}</span>
-        <span class="task-assignee">${escapeHtml(personName(t.assigneeId))}</span>
-      </span>
+      <span class="avatar" aria-hidden="true">${escapeHtml(initials(personName(t.assigneeId)))}</span>
+      <span class="task-line">${escapeHtml(t.text)} — <span class="task-assignee">${escapeHtml(personName(t.assigneeId))}</span></span>
       <button class="task-remove" title="Удалить задачу" aria-label="Удалить задачу">✕</button>
     `;
     row.querySelector('.task-remove').addEventListener('click', () => {
@@ -740,6 +772,54 @@
     state.people.push({ id: uid(), name });
     input.value = '';
     renderAll();
+  });
+
+  // ---- copy the whole grouped list as plain text ----
+  function buildListText() {
+    const lines = [];
+    function group(title, tasks) {
+      if (!tasks.length) return;
+      lines.push(`Эпик: ${title}`);
+      tasks.forEach(t => lines.push(`- ${t.text} — ${personName(t.assigneeId)}`));
+      lines.push('');
+    }
+    state.epics.forEach(epic => group(epic.name, state.tasks.filter(t => t.epicId === epic.id)));
+    group('Без эпика', state.tasks.filter(t => !epicOf(t.epicId)));
+    return lines.join('\n').trim();
+  }
+  const copyListBtn = $('#copyListBtn');
+  const copyBtnLabel = $('#copyBtnLabel');
+  copyListBtn.addEventListener('click', async () => {
+    const text = buildListText();
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e2) { /* no-op */ }
+      ta.remove();
+    }
+    const prev = copyBtnLabel.textContent;
+    copyBtnLabel.textContent = 'Скопировано';
+    setTimeout(() => { copyBtnLabel.textContent = prev; }, 1500);
+  });
+
+  // ---- export all data as a downloaded .json file ----
+  $('#exportBtn').addEventListener('click', () => {
+    const data = { epics: state.epics, people: state.people, tasks: state.tasks };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sprint-planner.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
   });
 
   // ---- settings drawer open/close ----
