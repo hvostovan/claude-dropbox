@@ -809,9 +809,32 @@
   });
 
   // ---- export all data as a downloaded .json file ----
-  $('#exportBtn').addEventListener('click', () => {
+  // Uses the artifact "downloads" capability when the viewer grants it
+  // (in-chat preview); falls back to a plain <a download> blob link, which
+  // is what actually fires when this file is opened outside the sandbox.
+  let downloadsApi;
+  (async () => {
+    try {
+      downloadsApi = window.claude && typeof window.claude.use === 'function'
+        ? await window.claude.use('downloads')
+        : null;
+    } catch (err) {
+      downloadsApi = null;
+    }
+  })();
+
+  $('#exportBtn').addEventListener('click', async () => {
     const data = { epics: state.epics, people: state.people, tasks: state.tasks };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const json = JSON.stringify(data, null, 2);
+    if (downloadsApi) {
+      try {
+        await downloadsApi.save({ filename: 'sprint-planner.json', data: json });
+        return;
+      } catch (err) {
+        // declined/rate_limited/etc — fall through to the plain-link path below
+      }
+    }
+    const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
