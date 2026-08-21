@@ -1,0 +1,768 @@
+<title>Sprint Planner</title>
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #eef1f4;
+    --card: #ffffff;
+    --card-soft: #f7f8fa;
+    --ink: #1c2430;
+    --ink-soft: #5b6472;
+    --ink-faint: #8994a3;
+    --line: #dce1e7;
+    --line-soft: #e8ebef;
+    --accent: #1f7a6c;
+    --accent-ink: #e9f5f2;
+    --accent-contrast: #ffffff;
+    --danger: #c1473a;
+    --danger-ink: #fbeceb;
+    --shadow: 0 1px 2px rgba(28, 36, 48, 0.06), 0 8px 24px -12px rgba(28, 36, 48, 0.18);
+    --shadow-lift: 0 2px 4px rgba(28, 36, 48, 0.08), 0 16px 32px -16px rgba(28, 36, 48, 0.28);
+
+    --epic-1: #d98e2b; --epic-1-ink: #fbf1e2;
+    --epic-2: #7b6fd9; --epic-2-ink: #f0eefb;
+    --epic-3: #3e7cb1; --epic-3-ink: #eaf3fa;
+    --epic-4: #c15b8c; --epic-4-ink: #faeaf1;
+    --epic-5: #5b8c5a; --epic-5-ink: #edf5ec;
+    --epic-6: #b1543e; --epic-6-ink: #faece8;
+
+    --font-ui: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --paper: #14181d;
+      --card: #1c2229;
+      --card-soft: #20262e;
+      --ink: #e7eaee;
+      --ink-soft: #9aa4b0;
+      --ink-faint: #6b7480;
+      --line: #2b323b;
+      --line-soft: #262d35;
+      --accent: #3fb3a0;
+      --accent-ink: #17332f;
+      --accent-contrast: #0c1512;
+      --danger: #e2685a;
+      --danger-ink: #331e1c;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+      --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 32px -16px rgba(0, 0, 0, 0.6);
+
+      --epic-1: #e3a24a; --epic-1-ink: #2e2411;
+      --epic-2: #9a8fe8; --epic-2-ink: #221f38;
+      --epic-3: #5b9bd1; --epic-3-ink: #16232f;
+      --epic-4: #d382ac; --epic-4-ink: #2c1c25;
+      --epic-5: #7cab7a; --epic-5-ink: #1a2419;
+      --epic-6: #c97258; --epic-6-ink: #2b1a15;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #14181d;
+    --card: #1c2229;
+    --card-soft: #20262e;
+    --ink: #e7eaee;
+    --ink-soft: #9aa4b0;
+    --ink-faint: #6b7480;
+    --line: #2b323b;
+    --line-soft: #262d35;
+    --accent: #3fb3a0;
+    --accent-ink: #17332f;
+    --accent-contrast: #0c1512;
+    --danger: #e2685a;
+    --danger-ink: #331e1c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+    --shadow-lift: 0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 32px -16px rgba(0, 0, 0, 0.6);
+
+    --epic-1: #e3a24a; --epic-1-ink: #2e2411;
+    --epic-2: #9a8fe8; --epic-2-ink: #221f38;
+    --epic-3: #5b9bd1; --epic-3-ink: #16232f;
+    --epic-4: #d382ac; --epic-4-ink: #2c1c25;
+    --epic-5: #7cab7a; --epic-5-ink: #1a2419;
+    --epic-6: #c97258; --epic-6-ink: #2b1a15;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent-ink); color: var(--ink); }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+  .app {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 20px 24px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 2px;
+  }
+  .brand { display: flex; align-items: baseline; gap: 9px; }
+  .brand-mark { font-size: 1.05rem; }
+  .brand-name {
+    font-size: 1.15rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .brand-sub {
+    color: var(--ink-faint);
+    font-size: 0.82rem;
+  }
+  .gear-btn {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .gear-btn:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .gear-btn:active { transform: scale(0.94); }
+  .gear-btn svg { width: 18px; height: 18px; }
+
+  /* ---------- Epic rail ---------- */
+  .epic-rail {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 3px 2px 9px;
+    scrollbar-width: thin;
+  }
+  .epic-rail:empty::after {
+    content: "Эпиков пока нет — добавьте в настройках (значок шестерёнки)";
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    padding: 8px 2px;
+  }
+  .epic-chip {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    font-weight: 550;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .epic-chip:hover { border-color: var(--ink-faint); color: var(--ink); }
+  .epic-chip .dot {
+    width: 9px; height: 9px; border-radius: 3px; flex: none;
+    background: var(--dot-color, var(--ink-faint));
+  }
+  .epic-chip[aria-pressed="true"] {
+    background: var(--dot-color, var(--accent));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-1px);
+  }
+  .epic-chip[aria-pressed="true"] .dot { background: rgba(255,255,255,0.85); }
+
+  /* ---------- Layout: two frames ---------- */
+  .board-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  @media (max-width: 760px) {
+    .board-layout { grid-template-columns: 1fr; }
+  }
+
+  .capture-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .capture-card h2 {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .capture-epic {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    align-self: flex-start;
+    padding: 5px 10px 5px 8px;
+    border-radius: 7px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: var(--tag-bg, var(--card-soft));
+    color: var(--tag-fg, var(--ink-soft));
+  }
+  .capture-epic .dot { width: 8px; height: 8px; border-radius: 2px; background: currentColor; }
+  .capture-epic.is-empty { background: var(--danger-ink); color: var(--danger); }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field-label { font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); }
+  textarea, select, input[type="text"] {
+    background: var(--card-soft);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 9px 11px;
+    color: var(--ink);
+    resize: vertical;
+  }
+  textarea:focus, select:focus, input[type="text"]:focus { border-color: var(--accent); }
+  textarea::placeholder, input::placeholder { color: var(--ink-faint); }
+
+  .btn {
+    border-radius: 9px;
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: filter 0.15s ease, transform 0.05s ease, background 0.15s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-primary { background: var(--accent); color: var(--accent-contrast); }
+  .btn-primary:hover:not(:disabled) { filter: brightness(1.06); }
+  .btn-ghost { background: var(--card-soft); color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--ink-faint); }
+
+  /* ---------- Board (right frame) ---------- */
+  .board { display: flex; flex-direction: column; gap: 20px; }
+  .board:empty::after {
+    content: "Пока нет задач — заполните форму слева.";
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+  }
+  .epic-group { display: flex; flex-direction: column; gap: 9px; }
+  .epic-group-head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding-left: 2px;
+  }
+  .epic-group-head .bar { width: 4px; height: 16px; border-radius: 2px; background: var(--bar-color, var(--ink-faint)); }
+  .epic-group-head h3 {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+  }
+  .epic-group-head .count {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+  }
+  .task-list { display: flex; flex-direction: column; gap: 7px; }
+  .task-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    padding: 11px 12px;
+    box-shadow: var(--shadow);
+  }
+  .avatar {
+    flex: none;
+    width: 27px; height: 27px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: var(--card-soft);
+    color: var(--ink-soft);
+  }
+  .task-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .task-text { font-size: 0.92rem; word-wrap: break-word; }
+  .task-assignee { font-size: 0.78rem; color: var(--ink-faint); }
+  .task-remove {
+    flex: none;
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    border: none;
+    background: transparent;
+    color: var(--ink-faint);
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.12s ease, background 0.12s ease, color 0.12s ease;
+  }
+  .task-row:hover .task-remove,
+  .task-row:focus-within .task-remove { opacity: 1; }
+  .task-remove:hover { background: var(--danger-ink); color: var(--danger); }
+  .task-remove:focus-visible { opacity: 1; }
+
+  /* ---------- Settings drawer ---------- */
+  .scrim {
+    position: fixed; inset: 0;
+    background: rgba(10, 14, 20, 0.4);
+    backdrop-filter: blur(1px);
+    z-index: 20;
+  }
+  .drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(380px, 92vw);
+    background: var(--paper);
+    border-left: 1px solid var(--line);
+    box-shadow: var(--shadow-lift);
+    z-index: 21;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 18px 24px;
+    gap: 22px;
+    overflow-y: auto;
+    transform: translateX(0);
+  }
+  .drawer-head { display: flex; align-items: center; justify-content: space-between; }
+  .drawer-head h2 { margin: 0; font-size: 1.05rem; font-weight: 650; }
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .icon-btn:hover { color: var(--ink); }
+
+  .drawer-section { display: flex; flex-direction: column; gap: 10px; }
+  .drawer-section h3 {
+    margin: 0;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+  }
+  .manage-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .manage-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 7px 8px 7px 10px;
+  }
+  .manage-row .dot { width: 9px; height: 9px; border-radius: 3px; flex: none; background: var(--dot-color, var(--ink-faint)); }
+  .manage-row .avatar { width: 22px; height: 22px; font-size: 0.65rem; }
+  .manage-row input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    padding: 3px 2px;
+  }
+  .manage-row input[type="text"]:focus { outline: none; border-bottom: 1px solid var(--accent); }
+  .row-delete {
+    flex: none;
+    border: none;
+    background: transparent;
+    color: var(--danger);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 6px;
+  }
+  .row-delete:hover { background: var(--danger-ink); }
+  .manage-list:empty::after {
+    content: "Пусто.";
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+  }
+  .add-row { display: flex; gap: 7px; }
+  .add-row input { flex: 1; min-width: 0; }
+
+  [hidden] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0.001ms !important; }
+  }
+</style>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">📌</span>
+      <span class="brand-name">Sprint Planner</span>
+      <span class="brand-sub">— общий список задач команды</span>
+    </div>
+    <button class="gear-btn" id="settingsBtn" aria-haspopup="dialog" aria-controls="settingsDrawer" title="Настройки: эпики и сотрудники">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.65 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.65a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.35 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"/>
+      </svg>
+    </button>
+  </header>
+
+  <nav class="epic-rail" id="epicRail" aria-label="Выбор эпика"></nav>
+
+  <main class="board-layout">
+    <section class="capture-card" aria-labelledby="captureTitle">
+      <h2 id="captureTitle">Новая задача</h2>
+      <div class="capture-epic" id="captureEpicTag"></div>
+      <label class="field">
+        <span class="field-label">Текст задачи</span>
+        <textarea id="taskText" rows="4" placeholder="Например: обновить лендинг"></textarea>
+      </label>
+      <label class="field">
+        <span class="field-label">Исполнитель</span>
+        <select id="taskAssignee"></select>
+      </label>
+      <button class="btn btn-primary" id="addTaskBtn">Добавить задачу</button>
+    </section>
+
+    <section class="board" id="board" aria-label="Список задач по эпикам"></section>
+  </main>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="settingsDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Настройки</h2>
+    <button class="icon-btn" id="closeDrawer" aria-label="Закрыть настройки">✕</button>
+  </div>
+
+  <section class="drawer-section" aria-labelledby="epicsHeading">
+    <h3 id="epicsHeading">Эпики</h3>
+    <ul class="manage-list" id="epicManageList"></ul>
+    <form class="add-row" id="addEpicForm">
+      <input type="text" id="newEpicName" placeholder="Новый эпик" required>
+      <button class="btn btn-ghost" type="submit">Добавить</button>
+    </form>
+  </section>
+
+  <section class="drawer-section" aria-labelledby="peopleHeading">
+    <h3 id="peopleHeading">Сотрудники</h3>
+    <ul class="manage-list" id="peopleManageList"></ul>
+    <form class="add-row" id="addPersonForm">
+      <input type="text" id="newPersonName" placeholder="Имя сотрудника" required>
+      <button class="btn btn-ghost" type="submit">Добавить</button>
+    </form>
+  </section>
+</aside>
+
+<script>
+  const EPIC_COLORS = ['epic-1', 'epic-2', 'epic-3', 'epic-4', 'epic-5', 'epic-6'];
+  let uidSeed = 0;
+  const uid = () => 'id' + (++uidSeed);
+
+  const state = {
+    epics: [
+      { id: uid(), name: 'Космос', color: 'epic-1' },
+      { id: uid(), name: 'Ретро сайта', color: 'epic-2' },
+      { id: uid(), name: 'Инфраструктура', color: 'epic-3' },
+    ],
+    people: [],
+    tasks: [],
+    selectedEpicId: null,
+  };
+  // seed people
+  ['Женя', 'Павел', 'Юра', 'Илья', 'Настя'].forEach(n => state.people.push({ id: uid(), name: n }));
+  state.selectedEpicId = state.epics[0].id;
+  // seed tasks
+  const byName = n => state.people.find(p => p.name === n).id;
+  const epicId = i => state.epics[i].id;
+  state.tasks.push(
+    { id: uid(), text: 'Придумать план для счастья', assigneeId: byName('Женя'), epicId: epicId(0) },
+    { id: uid(), text: 'Собрать референсы миссий', assigneeId: byName('Павел'), epicId: epicId(0) },
+    { id: uid(), text: 'Обновить лендинг', assigneeId: byName('Юра'), epicId: epicId(1) },
+    { id: uid(), text: 'Настроить CI', assigneeId: byName('Илья'), epicId: epicId(2) },
+  );
+
+  const $ = sel => document.querySelector(sel);
+  const epicRail = $('#epicRail');
+  const captureEpicTag = $('#captureEpicTag');
+  const taskText = $('#taskText');
+  const taskAssignee = $('#taskAssignee');
+  const addTaskBtn = $('#addTaskBtn');
+  const board = $('#board');
+  const epicManageList = $('#epicManageList');
+  const peopleManageList = $('#peopleManageList');
+
+  function nextEpicColor() {
+    const used = state.epics.map(e => e.color);
+    return EPIC_COLORS.find(c => !used.includes(c)) || EPIC_COLORS[state.epics.length % EPIC_COLORS.length];
+  }
+  function initials(name) {
+    return name.trim().split(/\s+/).map(p => p[0]).join('').slice(0, 2).toUpperCase();
+  }
+  function personName(id) {
+    const p = state.people.find(p => p.id === id);
+    return p ? p.name : '—';
+  }
+  function epicOf(id) { return state.epics.find(e => e.id === id); }
+
+  function renderEpicRail() {
+    epicRail.innerHTML = '';
+    state.epics.forEach(epic => {
+      const btn = document.createElement('button');
+      btn.className = 'epic-chip';
+      btn.type = 'button';
+      btn.style.setProperty('--dot-color', `var(--${epic.color})`);
+      btn.setAttribute('aria-pressed', String(epic.id === state.selectedEpicId));
+      btn.innerHTML = `<span class="dot"></span>${escapeHtml(epic.name)}`;
+      btn.addEventListener('click', () => {
+        state.selectedEpicId = epic.id;
+        renderEpicRail();
+        renderCaptureEpic();
+      });
+      epicRail.appendChild(btn);
+    });
+  }
+
+  function renderCaptureEpic() {
+    const epic = epicOf(state.selectedEpicId);
+    const hasEpics = state.epics.length > 0;
+    addTaskBtn.disabled = !hasEpics;
+    taskText.disabled = !hasEpics;
+    taskAssignee.disabled = !hasEpics || state.people.length === 0;
+    if (!hasEpics) {
+      captureEpicTag.className = 'capture-epic is-empty';
+      captureEpicTag.innerHTML = 'Сначала добавьте эпик в настройках';
+      return;
+    }
+    captureEpicTag.className = 'capture-epic';
+    captureEpicTag.style.setProperty('--tag-bg', `var(--${epic.color}-ink)`);
+    captureEpicTag.style.setProperty('--tag-fg', `var(--${epic.color})`);
+    captureEpicTag.innerHTML = `<span class="dot"></span>Эпик: ${escapeHtml(epic.name)}`;
+  }
+
+  function renderAssigneeOptions() {
+    taskAssignee.innerHTML = '';
+    if (state.people.length === 0) {
+      const opt = document.createElement('option');
+      opt.textContent = 'Нет сотрудников — добавьте в настройках';
+      taskAssignee.appendChild(opt);
+      return;
+    }
+    state.people.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = p.name;
+      taskAssignee.appendChild(opt);
+    });
+  }
+
+  function renderBoard() {
+    board.innerHTML = '';
+    state.epics.forEach(epic => {
+      const tasks = state.tasks.filter(t => t.epicId === epic.id);
+      if (tasks.length === 0) return;
+      const group = document.createElement('div');
+      group.className = 'epic-group';
+      group.innerHTML = `
+        <div class="epic-group-head">
+          <span class="bar" style="--bar-color: var(--${epic.color})"></span>
+          <h3>${escapeHtml(epic.name)}</h3>
+          <span class="count">${tasks.length}</span>
+        </div>
+        <div class="task-list"></div>
+      `;
+      const list = group.querySelector('.task-list');
+      tasks.forEach(t => list.appendChild(renderTaskRow(t)));
+      board.appendChild(group);
+    });
+
+    const unassigned = state.tasks.filter(t => !epicOf(t.epicId));
+    if (unassigned.length) {
+      const group = document.createElement('div');
+      group.className = 'epic-group';
+      group.innerHTML = `
+        <div class="epic-group-head">
+          <span class="bar"></span>
+          <h3>Без эпика</h3>
+          <span class="count">${unassigned.length}</span>
+        </div>
+        <div class="task-list"></div>
+      `;
+      const list = group.querySelector('.task-list');
+      unassigned.forEach(t => list.appendChild(renderTaskRow(t)));
+      board.appendChild(group);
+    }
+  }
+
+  function renderTaskRow(t) {
+    const row = document.createElement('div');
+    row.className = 'task-row';
+    row.innerHTML = `
+      <span class="avatar">${escapeHtml(initials(personName(t.assigneeId)))}</span>
+      <span class="task-body">
+        <span class="task-text">${escapeHtml(t.text)}</span>
+        <span class="task-assignee">${escapeHtml(personName(t.assigneeId))}</span>
+      </span>
+      <button class="task-remove" title="Удалить задачу" aria-label="Удалить задачу">✕</button>
+    `;
+    row.querySelector('.task-remove').addEventListener('click', () => {
+      state.tasks = state.tasks.filter(x => x.id !== t.id);
+      renderBoard();
+    });
+    return row;
+  }
+
+  function renderEpicManageList() {
+    epicManageList.innerHTML = '';
+    state.epics.forEach(epic => {
+      const li = document.createElement('li');
+      li.className = 'manage-row';
+      li.style.setProperty('--dot-color', `var(--${epic.color})`);
+      li.innerHTML = `
+        <span class="dot"></span>
+        <input type="text" value="${escapeAttr(epic.name)}" aria-label="Название эпика">
+        <button class="row-delete" type="button">Удалить</button>
+      `;
+      const input = li.querySelector('input');
+      input.addEventListener('change', () => {
+        epic.name = input.value.trim() || epic.name;
+        renderAll();
+      });
+      li.querySelector('.row-delete').addEventListener('click', () => {
+        state.epics = state.epics.filter(e => e.id !== epic.id);
+        state.tasks.forEach(t => { if (t.epicId === epic.id) t.epicId = null; });
+        if (state.selectedEpicId === epic.id) {
+          state.selectedEpicId = state.epics[0] ? state.epics[0].id : null;
+        }
+        renderAll();
+      });
+      epicManageList.appendChild(li);
+    });
+  }
+
+  function renderPeopleManageList() {
+    peopleManageList.innerHTML = '';
+    state.people.forEach(person => {
+      const li = document.createElement('li');
+      li.className = 'manage-row';
+      li.innerHTML = `
+        <span class="avatar">${escapeHtml(initials(person.name))}</span>
+        <input type="text" value="${escapeAttr(person.name)}" aria-label="Имя сотрудника">
+        <button class="row-delete" type="button">Удалить</button>
+      `;
+      const input = li.querySelector('input');
+      input.addEventListener('change', () => {
+        person.name = input.value.trim() || person.name;
+        renderAll();
+      });
+      li.querySelector('.row-delete').addEventListener('click', () => {
+        state.people = state.people.filter(p => p.id !== person.id);
+        renderAll();
+      });
+      peopleManageList.appendChild(li);
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  }
+  function escapeAttr(s) { return escapeHtml(s).replace(/"/g, '&quot;'); }
+
+  function renderAll() {
+    renderEpicRail();
+    renderCaptureEpic();
+    renderAssigneeOptions();
+    renderBoard();
+    renderEpicManageList();
+    renderPeopleManageList();
+  }
+
+  addTaskBtn.addEventListener('click', () => {
+    const text = taskText.value.trim();
+    if (!text || !state.selectedEpicId || state.people.length === 0) return;
+    state.tasks.push({
+      id: uid(),
+      text,
+      assigneeId: taskAssignee.value,
+      epicId: state.selectedEpicId,
+    });
+    taskText.value = '';
+    taskText.focus();
+    renderBoard();
+  });
+
+  const addEpicForm = $('#addEpicForm');
+  addEpicForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const input = $('#newEpicName');
+    const name = input.value.trim();
+    if (!name) return;
+    const epic = { id: uid(), name, color: nextEpicColor() };
+    state.epics.push(epic);
+    if (!state.selectedEpicId) state.selectedEpicId = epic.id;
+    input.value = '';
+    renderAll();
+  });
+
+  const addPersonForm = $('#addPersonForm');
+  addPersonForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const input = $('#newPersonName');
+    const name = input.value.trim();
+    if (!name) return;
+    state.people.push({ id: uid(), name });
+    input.value = '';
+    renderAll();
+  });
+
+  // ---- settings drawer open/close ----
+  const settingsBtn = $('#settingsBtn');
+  const settingsDrawer = $('#settingsDrawer');
+  const scrim = $('#scrim');
+  const closeDrawer = $('#closeDrawer');
+  function openDrawer() {
+    settingsDrawer.hidden = false;
+    scrim.hidden = false;
+    closeDrawer.focus();
+  }
+  function hideDrawer() {
+    settingsDrawer.hidden = true;
+    scrim.hidden = true;
+    settingsBtn.focus();
+  }
+  settingsBtn.addEventListener('click', openDrawer);
+  closeDrawer.addEventListener('click', hideDrawer);
+  scrim.addEventListener('click', hideDrawer);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !settingsDrawer.hidden) hideDrawer();
+  });
+
+  renderAll();
+</script>
